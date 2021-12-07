@@ -1,1 +1,16 @@
+dR_/dt=sR-(R_-C)-C*a
+dr/dt=1-g*(r-C)-C*b*g
+C=(K*R_ + K*r - sqrt(K**2*R_**2 - 2*K**2*R_*r + K**2*r**2 + 2*K*R_ + 2*K*r + 1) + 1)/(2*K)
 
+par sR=13.0
+par K=1148
+par a=8.033
+par b=0.29
+par g=1.988
+
+init r=1.2
+init R_=0.5
+
+@ dt=0.01, total=100, method=stiff, maxstore=10000000, bound=100000000
+@ XP=r, YP=R_, XLO=1.0, YLO=1.0, XHI=2.1, YHI=2.1, NMESH=500
+done
