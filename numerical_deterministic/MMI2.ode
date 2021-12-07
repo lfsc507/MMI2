@@ -1,0 +1,24 @@
+# r: microRNA; R_: mRNA
+
+dR_/dt=sR0+sR-(R_-2*c1(r,R_,K)-1*c2(r,R_,K))-2*c1(r,R_,K)*a1-a2*c2(r,R_,K)
+dr/dt=1-g*(r-2*c1(r,R_,K)-2*1*c2(r,R_,K))-g*b1*2*c1(r,R_,K)-g*b2*2*c2(r,R_,K)
+
+c1(r,R_,K)=(0.125*(-1.-2*K*r-K**2*r**2-2*K*R_+2*K**2*r*R_))/(K**2*R_)+0.125*((1.+4*K*r+6*K**2*r**2+4*K**3*r**3+K**4*r**4+4*K*R_+4*K**2*r*R_-4*K**3*r**2*R_-4*K**4*r**3*R_+4*K**2*R_**2+8*K**3*r*R_**2+4*K**4*r**2*R_**2)/(K**4*R_**2))**0.5
+c2(r,R_,K)=(K*(r*c1(r,R_,K)-2*c1(r,R_,K)**2)/(1+2*K*c1(r,R_,K)))
+
+par sR=0.5, sR0=3.1, a2=12.0, b1=1.0, b2=7.0, g=0.25 # Hopf
+#par sR=3.0, sR0=0.0, a2=4.0,  b1=0.5, b2=0.1, g=2.0 # Saddle-node
+#par sR=0.4, sR0=5.7, a2=12.0, b1=1.0, b2=4.0, g=0.25 # SNIC
+#par sR=0.85, sR0=6.9, a2=12.0, b1=1.0, b2=3.0, g=0.25 # SL
+par a1=1
+par K=1000
+
+init r=0.1
+init R_=0.1
+
+@ dt=0.01, total=100, method=stiff, maxstore=10000000, bound=100000000
+@ XP=r, YP=R_, XLO=-0.01, YLO=-0.01, XHI=1.5, YHI=2, NMESH=500 # Hopf
+#@ XP=r, YP=R_, XLO=-0.01, YLO=-0.01, XHI=2.5, YHI=4, NMESH=500 # Saddle-node
+#@ XP=r, YP=R_, XLO=-0.01, YLO=-0.01, XHI=2.5, YHI=4, NMESH=500 # SNIC
+#@ XP=r, YP=R_, XLO=-0.01, YLO=-0.01, XHI=2.5, YHI=4, NMESH=500 # SL
+done
