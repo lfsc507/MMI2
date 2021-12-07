@@ -1,3 +1,5 @@
+# Must set the "V" shell variable to the desired cell volume before running
+
 nohup python gillespie.py lo gillespie/snic_v${V}_lo_57.h5 s_m=0 V=$V &
 nohup python gillespie.py lo gillespie/snic_v${V}_lo_60.h5 s_m=0.3 V=$V &
 nohup python gillespie.py lo gillespie/snic_v${V}_lo_63.h5 s_m=0.6 V=$V &
