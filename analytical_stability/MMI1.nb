@@ -1,0 +1,867 @@
+(* Content-type: application/vnd.wolfram.mathematica *)
+
+(*** Wolfram Notebook File ***)
+(* http://www.wolfram.com/nb *)
+
+(* CreatedBy='Mathematica 12.3' *)
+
+(*CacheID: 234*)
+(* Internal cache information:
+NotebookFileLineBreakTest
+NotebookFileLineBreakTest
+NotebookDataPosition[       158,          7]
+NotebookDataLength[     44604,        859]
+NotebookOptionsPosition[     42721,        824]
+NotebookOutlinePosition[     43112,        840]
+CellTagsIndexPosition[     43069,        837]
+WindowFrame->Normal*)
+
+(* Beginning of Notebook Content *)
+Notebook[{
+
+Cell[CellGroupData[{
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"(*", " ", 
+   RowBox[{
+    RowBox[{
+    "Stability", " ", "of", " ", "MMI1", " ", "Model", " ", "by", " ", "the", 
+     " ", "Routh"}], "-", 
+    RowBox[{"Hurwitz", " ", "Criterion"}]}], " ", "*)"}], 
+  "\[IndentingNewLine]", 
+  RowBox[{"(*", " ", 
+   RowBox[{
+    RowBox[{
+     RowBox[{"//", "//"}], "//"}], "//"}], " ", "*)"}], "\[IndentingNewLine]",
+   "\[IndentingNewLine]", 
+  RowBox[{"(*", " ", 
+   RowBox[{
+    RowBox[{"Defining", " ", "ODE"}], ",", " ", 
+    RowBox[{
+    "computing", " ", "the", " ", "Jacobian", " ", "matrix", " ", "and", " ", 
+     "the", " ", "characteristic", " ", "polynomial"}]}], " ", "*)"}], 
+  "\[IndentingNewLine]", 
+  RowBox[{
+   RowBox[{
+    RowBox[{"xvec", " ", "=", " ", 
+     RowBox[{"{", 
+      RowBox[{"R", ",", " ", "r", ",", " ", "C"}], "}"}]}], ";"}], 
+   "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{"RHS", " ", "=", " ", 
+     RowBox[{"{", 
+      RowBox[{
+       RowBox[{"\[Sigma]", " ", "-", " ", 
+        RowBox[{
+         RowBox[{"Superscript", "[", 
+          RowBox[{"\[Kappa]", ",", "on"}], "]"}], "*", "R", "*", "r"}], " ", 
+        "+", " ", 
+        RowBox[{
+         RowBox[{"Superscript", "[", 
+          RowBox[{"\[Kappa]", ",", "off"}], "]"}], "*", "C"}], " ", "-", " ", 
+        "R", " ", "+", " ", 
+        RowBox[{"\[Beta]", "*", "\[Gamma]", "*", "C"}]}], ",", " ", 
+       "\[IndentingNewLine]", 
+       RowBox[{"1", " ", "-", " ", 
+        RowBox[{
+         RowBox[{"Superscript", "[", 
+          RowBox[{"\[Kappa]", ",", "on"}], "]"}], "*", "R", "*", "r"}], " ", 
+        "+", " ", 
+        RowBox[{
+         RowBox[{"Superscript", "[", 
+          RowBox[{"\[Kappa]", ",", "off"}], "]"}], "*", "C"}], " ", "-", " ", 
+        
+        RowBox[{"\[Gamma]", "*", "r"}], " ", "+", " ", 
+        RowBox[{"\[Alpha]", "*", "C"}]}], ",", "\[IndentingNewLine]", 
+       RowBox[{
+        RowBox[{
+         RowBox[{"Superscript", "[", 
+          RowBox[{"\[Kappa]", ",", "on"}], "]"}], "*", "R", "*", "r"}], " ", 
+        "-", " ", 
+        RowBox[{
+         RowBox[{"Superscript", "[", 
+          RowBox[{"\[Kappa]", ",", "off"}], "]"}], "*", "C"}], " ", "-", " ", 
+        
+        RowBox[{"\[Alpha]", "*", "C"}], " ", "-", " ", 
+        RowBox[{"\[Beta]", "*", "\[Gamma]", "*", "C"}]}]}], "}"}]}], ";"}], 
+   " ", "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{"Jac", " ", "=", 
+     RowBox[{"Grad", "[", 
+      RowBox[{"RHS", ",", " ", "xvec"}], "]"}]}], ";"}], 
+   "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{"charpol", " ", "=", " ", 
+     RowBox[{"-", 
+      RowBox[{"Collect", "[", 
+       RowBox[{
+        RowBox[{"CharacteristicPolynomial", "[", 
+         RowBox[{"Jac", ",", "\[Lambda]"}], "]"}], ",", "\[Lambda]"}], 
+       "]"}]}]}], ";"}], " ", "\[IndentingNewLine]", "\[IndentingNewLine]", 
+   RowBox[{"StringForm", "[", 
+    RowBox[{"\"\<Jacobian Matrix for MMI1 model is ``.\>\"", ",", " ", 
+     RowBox[{"MatrixForm", "[", "Jac", "]"}]}], "]"}], "\[IndentingNewLine]", 
+   
+   RowBox[{"StringForm", "[", 
+    RowBox[{
+    "\"\<Characteristic polynomial -det(Jac-\[Lambda]) = ``\>\"", ",", " ", 
+     "charpol"}], "]"}], "\[IndentingNewLine]", "\[IndentingNewLine]", 
+   RowBox[{"(*", " ", 
+    RowBox[{
+     RowBox[{
+     "Extracting", " ", "symbolic", " ", "coefficients", " ", "of", " ", 
+      "the", " ", "characteristic", " ", "polynomial", " ", 
+      "\[IndentingNewLine]", "p", 
+      RowBox[{"(", "\[Lambda]", ")"}]}], " ", "=", " ", 
+     RowBox[{
+      RowBox[{"a3", "*", 
+       RowBox[{"\[Lambda]", "^", "3"}]}], " ", "+", " ", 
+      RowBox[{"a2", "*", 
+       RowBox[{"\[Lambda]", "^", "2"}]}], " ", "+", " ", 
+      RowBox[{"a1", "*", "\[Lambda]"}], " ", "+", " ", "a0"}]}], "  ", "*)"}],
+    " ", "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{"a0", " ", "=", " ", 
+     RowBox[{"Expand", "[", 
+      RowBox[{"Assuming", "[", 
+       RowBox[{
+        RowBox[{"\[Lambda]", "==", "0"}], ",", " ", 
+        RowBox[{"Simplify", "[", "charpol", "]"}]}], "]"}], "]"}]}], ";"}], 
+   "  ", "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{"a1", " ", "=", " ", 
+     RowBox[{"Expand", "[", 
+      RowBox[{"Assuming", "[", 
+       RowBox[{
+        RowBox[{"\[Lambda]", "==", "0"}], ",", " ", 
+        RowBox[{"Simplify", "[", 
+         RowBox[{
+          RowBox[{"(", 
+           RowBox[{"charpol", "-", "a0"}], ")"}], "/", "\[Lambda]"}], "]"}]}],
+        "]"}], "]"}]}], ";"}], " ", "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{"a2", " ", "=", " ", 
+     RowBox[{"Expand", "[", 
+      RowBox[{"Assuming", "[", 
+       RowBox[{
+        RowBox[{"\[Lambda]", "==", "0"}], ",", " ", 
+        RowBox[{"Simplify", "[", 
+         RowBox[{
+          RowBox[{"(", 
+           RowBox[{"charpol", "-", "a0", "-", 
+            RowBox[{"a1", "*", "\[Lambda]"}]}], ")"}], "/", 
+          RowBox[{"\[Lambda]", "^", "2"}]}], "]"}]}], "]"}], "]"}]}], ";"}], 
+   " ", "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{"a3", " ", "=", " ", 
+     RowBox[{"Assuming", "[", 
+      RowBox[{
+       RowBox[{"\[Lambda]", "==", "0"}], ",", " ", 
+       RowBox[{"Simplify", "[", 
+        RowBox[{
+         RowBox[{"(", 
+          RowBox[{"charpol", "-", "a0", "-", 
+           RowBox[{"a1", "*", "\[Lambda]"}], "-", 
+           RowBox[{"a2", "*", 
+            RowBox[{"\[Lambda]", "^", "2"}]}]}], ")"}], "/", 
+         RowBox[{"\[Lambda]", "^", "3"}]}], "]"}]}], "]"}]}], ";"}], 
+   " "}]}]], "Input",
+ CellChangeTimes->{{3.847564349771523*^9, 3.847564409392227*^9}, {
+  3.847622322480116*^9, 3.847622342163766*^9}, {3.847622475821857*^9, 
+  3.847622539022681*^9}, {3.847628716758762*^9, 3.84762872014788*^9}, {
+  3.847629121386997*^9, 3.8476291239801693`*^9}, {3.847646115278089*^9, 
+  3.8476461154333344`*^9}, {3.847909604087154*^9, 3.8479096133171663`*^9}},
+ CellLabel->"In[1]:=",ExpressionUUID->"385743dd-9622-4eef-95fa-b1c154cb1568"],
+
+Cell[BoxData[
+ InterpretationBox["\<\"Jacobian Matrix for MMI1 model is \
+\\!\\(\\*TagBox[RowBox[{\\\"(\\\", \\\"\[NoBreak]\\\", \
+GridBox[{{RowBox[{RowBox[{\\\"-\\\", \\\"1\\\"}], \\\"-\\\", \
+RowBox[{\\\"r\\\", \\\" \\\", TemplateBox[List[\\\"\\\\[Kappa]\\\", \
+\\\"on\\\"], \\\"Superscript\\\", Rule[SyntaxForm, SuperscriptBox]]}]}], \
+RowBox[{RowBox[{\\\"-\\\", \\\"R\\\"}], \\\" \\\", \
+TemplateBox[List[\\\"\\\\[Kappa]\\\", \\\"on\\\"], \\\"Superscript\\\", \
+Rule[SyntaxForm, SuperscriptBox]]}], RowBox[{RowBox[{\\\"\[Beta]\\\", \\\" \\\
+\", \\\"\[Gamma]\\\"}], \\\"+\\\", TemplateBox[List[\\\"\\\\[Kappa]\\\", \
+\\\"off\\\"], \\\"Superscript\\\", Rule[SyntaxForm, SuperscriptBox]]}]}, \
+{RowBox[{RowBox[{\\\"-\\\", \\\"r\\\"}], \\\" \\\", \
+TemplateBox[List[\\\"\\\\[Kappa]\\\", \\\"on\\\"], \\\"Superscript\\\", \
+Rule[SyntaxForm, SuperscriptBox]]}], RowBox[{RowBox[{\\\"-\\\", \
+\\\"\[Gamma]\\\"}], \\\"-\\\", RowBox[{\\\"R\\\", \\\" \\\", \
+TemplateBox[List[\\\"\\\\[Kappa]\\\", \\\"on\\\"], \\\"Superscript\\\", \
+Rule[SyntaxForm, SuperscriptBox]]}]}], RowBox[{\\\"\[Alpha]\\\", \\\"+\\\", \
+TemplateBox[List[\\\"\\\\[Kappa]\\\", \\\"off\\\"], \\\"Superscript\\\", \
+Rule[SyntaxForm, SuperscriptBox]]}]}, {RowBox[{\\\"r\\\", \\\" \\\", \
+TemplateBox[List[\\\"\\\\[Kappa]\\\", \\\"on\\\"], \\\"Superscript\\\", \
+Rule[SyntaxForm, SuperscriptBox]]}], RowBox[{\\\"R\\\", \\\" \\\", \
+TemplateBox[List[\\\"\\\\[Kappa]\\\", \\\"on\\\"], \\\"Superscript\\\", \
+Rule[SyntaxForm, SuperscriptBox]]}], RowBox[{RowBox[{\\\"-\\\", \
+\\\"\[Alpha]\\\"}], \\\"-\\\", RowBox[{\\\"\[Beta]\\\", \\\" \\\", \\\"\
+\[Gamma]\\\"}], \\\"-\\\", TemplateBox[List[\\\"\\\\[Kappa]\\\", \
+\\\"off\\\"], \\\"Superscript\\\", Rule[SyntaxForm, SuperscriptBox]]}]}}, \
+Rule[RowSpacings, 1], Rule[ColumnSpacings, 1], Rule[RowAlignments, Baseline], \
+Rule[ColumnAlignments, Center]], \\\"\[NoBreak]\\\", \\\")\\\"}], \
+Function[BoxForm`e$, MatrixForm[BoxForm`e$]]]\\).\"\>",
+  StringForm["Jacobian Matrix for MMI1 model is ``.", 
+   MatrixForm[{{-1 - $CellContext`r 
+      Superscript[$CellContext`\[Kappa], $CellContext`on], -$CellContext`R 
+      Superscript[$CellContext`\[Kappa], $CellContext`on], $CellContext`\
+\[Beta] $CellContext`\[Gamma] + 
+      Superscript[$CellContext`\[Kappa], $CellContext`off]}, {-$CellContext`r 
+      Superscript[$CellContext`\[Kappa], $CellContext`on], -$CellContext`\
+\[Gamma] - $CellContext`R 
+      Superscript[$CellContext`\[Kappa], $CellContext`on], $CellContext`\
+\[Alpha] + 
+      Superscript[$CellContext`\[Kappa], $CellContext`off]}, {$CellContext`r 
+      Superscript[$CellContext`\[Kappa], $CellContext`on], $CellContext`R 
+      Superscript[$CellContext`\[Kappa], $CellContext`on], -$CellContext`\
+\[Alpha] - $CellContext`\[Beta] $CellContext`\[Gamma] - 
+      Superscript[$CellContext`\[Kappa], $CellContext`off]}}]],
+  Editable->False]], "Output",
+ CellChangeTimes->{3.847909927858284*^9},
+ CellLabel->"Out[5]=",ExpressionUUID->"35455edd-3861-446b-bb57-154fd8808630"],
+
+Cell[BoxData[
+ InterpretationBox["\<\"Characteristic polynomial -det(Jac-\[Lambda]) = \
+\\!\\(\\*RowBox[{RowBox[{\\\"\[Alpha]\\\", \\\" \\\", \\\"\[Gamma]\\\"}], \
+\\\"+\\\", RowBox[{\\\"\[Beta]\\\", \\\" \\\", \
+SuperscriptBox[\\\"\[Gamma]\\\", \\\"2\\\"]}], \\\"+\\\", SuperscriptBox[\\\"\
+\[Lambda]\\\", \\\"3\\\"], \\\"+\\\", RowBox[{\\\"\[Gamma]\\\", \\\" \\\", \
+TemplateBox[List[\\\"\\\\[Kappa]\\\", \\\"off\\\"], \\\"Superscript\\\", \
+Rule[SyntaxForm, SuperscriptBox]]}], \\\"+\\\", RowBox[{\\\"r\\\", \\\" \\\", \
+\\\"\[Alpha]\\\", \\\" \\\", \\\"\[Gamma]\\\", \\\" \\\", TemplateBox[List[\\\
+\"\\\\[Kappa]\\\", \\\"on\\\"], \\\"Superscript\\\", Rule[SyntaxForm, \
+SuperscriptBox]]}], \\\"+\\\", RowBox[{\\\"R\\\", \\\" \\\", \\\"\[Beta]\\\", \
+\\\" \\\", \\\"\[Gamma]\\\", \\\" \\\", TemplateBox[List[\\\"\\\\[Kappa]\\\", \
+\\\"on\\\"], \\\"Superscript\\\", Rule[SyntaxForm, SuperscriptBox]]}], \
+\\\"-\\\", RowBox[{SuperscriptBox[\\\"\[Lambda]\\\", \\\"2\\\"], \\\" \\\", \
+RowBox[{\\\"(\\\", RowBox[{RowBox[{\\\"-\\\", \\\"1\\\"}], \\\"-\\\", \\\"\
+\[Alpha]\\\", \\\"-\\\", \\\"\[Gamma]\\\", \\\"-\\\", \
+RowBox[{\\\"\[Beta]\\\", \\\" \\\", \\\"\[Gamma]\\\"}], \\\"-\\\", \
+TemplateBox[List[\\\"\\\\[Kappa]\\\", \\\"off\\\"], \\\"Superscript\\\", \
+Rule[SyntaxForm, SuperscriptBox]], \\\"-\\\", RowBox[{\\\"r\\\", \\\" \\\", \
+TemplateBox[List[\\\"\\\\[Kappa]\\\", \\\"on\\\"], \\\"Superscript\\\", \
+Rule[SyntaxForm, SuperscriptBox]]}], \\\"-\\\", RowBox[{\\\"R\\\", \\\" \\\", \
+TemplateBox[List[\\\"\\\\[Kappa]\\\", \\\"on\\\"], \\\"Superscript\\\", \
+Rule[SyntaxForm, SuperscriptBox]]}]}], \\\")\\\"}]}], \\\"-\\\", RowBox[{\\\"\
+\[Lambda]\\\", \\\" \\\", RowBox[{\\\"(\\\", RowBox[{RowBox[{\\\"-\\\", \\\"\
+\[Alpha]\\\"}], \\\"-\\\", \\\"\[Gamma]\\\", \\\"-\\\", \
+RowBox[{\\\"\[Alpha]\\\", \\\" \\\", \\\"\[Gamma]\\\"}], \\\"-\\\", \
+RowBox[{\\\"\[Beta]\\\", \\\" \\\", \\\"\[Gamma]\\\"}], \\\"-\\\", RowBox[{\\\
+\"\[Beta]\\\", \\\" \\\", SuperscriptBox[\\\"\[Gamma]\\\", \\\"2\\\"]}], \
+\\\"-\\\", TemplateBox[List[\\\"\\\\[Kappa]\\\", \\\"off\\\"], \
+\\\"Superscript\\\", Rule[SyntaxForm, SuperscriptBox]], \\\"-\\\", RowBox[{\\\
+\"\[Gamma]\\\", \\\" \\\", TemplateBox[List[\\\"\\\\[Kappa]\\\", \
+\\\"off\\\"], \\\"Superscript\\\", Rule[SyntaxForm, SuperscriptBox]]}], \\\"-\
+\\\", RowBox[{\\\"R\\\", \\\" \\\", TemplateBox[List[\\\"\\\\[Kappa]\\\", \
+\\\"on\\\"], \\\"Superscript\\\", Rule[SyntaxForm, SuperscriptBox]]}], \
+\\\"-\\\", RowBox[{\\\"r\\\", \\\" \\\", \\\"\[Alpha]\\\", \\\" \\\", \
+TemplateBox[List[\\\"\\\\[Kappa]\\\", \\\"on\\\"], \\\"Superscript\\\", \
+Rule[SyntaxForm, SuperscriptBox]]}], \\\"-\\\", RowBox[{\\\"r\\\", \\\" \\\", \
+\\\"\[Gamma]\\\", \\\" \\\", TemplateBox[List[\\\"\\\\[Kappa]\\\", \
+\\\"on\\\"], \\\"Superscript\\\", Rule[SyntaxForm, SuperscriptBox]]}], \
+\\\"-\\\", RowBox[{\\\"R\\\", \\\" \\\", \\\"\[Beta]\\\", \\\" \\\", \\\"\
+\[Gamma]\\\", \\\" \\\", TemplateBox[List[\\\"\\\\[Kappa]\\\", \\\"on\\\"], \
+\\\"Superscript\\\", Rule[SyntaxForm, SuperscriptBox]]}]}], \
+\\\")\\\"}]}]}]\\)\"\>",
+  StringForm[
+  "Characteristic polynomial -det(Jac-\[Lambda]) = ``", $CellContext`\[Alpha] \
+$CellContext`\[Gamma] + $CellContext`\[Beta] $CellContext`\[Gamma]^2 + \
+$CellContext`\[Lambda]^3 + $CellContext`\[Gamma] 
+    Superscript[$CellContext`\[Kappa], $CellContext`off] + $CellContext`r \
+$CellContext`\[Alpha] $CellContext`\[Gamma] 
+    Superscript[$CellContext`\[Kappa], $CellContext`on] + $CellContext`R \
+$CellContext`\[Beta] $CellContext`\[Gamma] 
+    Superscript[$CellContext`\[Kappa], $CellContext`on] - $CellContext`\
+\[Lambda]^2 (-1 - $CellContext`\[Alpha] - $CellContext`\[Gamma] - \
+$CellContext`\[Beta] $CellContext`\[Gamma] - 
+    Superscript[$CellContext`\[Kappa], $CellContext`off] - $CellContext`r 
+    Superscript[$CellContext`\[Kappa], $CellContext`on] - $CellContext`R 
+    Superscript[$CellContext`\[Kappa], $CellContext`on]) - $CellContext`\
+\[Lambda] (-$CellContext`\[Alpha] - $CellContext`\[Gamma] - $CellContext`\
+\[Alpha] $CellContext`\[Gamma] - $CellContext`\[Beta] $CellContext`\[Gamma] - \
+$CellContext`\[Beta] $CellContext`\[Gamma]^2 - 
+    Superscript[$CellContext`\[Kappa], $CellContext`off] - $CellContext`\
+\[Gamma] Superscript[$CellContext`\[Kappa], $CellContext`off] - \
+$CellContext`R 
+    Superscript[$CellContext`\[Kappa], $CellContext`on] - $CellContext`r \
+$CellContext`\[Alpha] 
+    Superscript[$CellContext`\[Kappa], $CellContext`on] - $CellContext`r \
+$CellContext`\[Gamma] 
+    Superscript[$CellContext`\[Kappa], $CellContext`on] - $CellContext`R \
+$CellContext`\[Beta] $CellContext`\[Gamma] 
+    Superscript[$CellContext`\[Kappa], $CellContext`on])],
+  Editable->False]], "Output",
+ CellChangeTimes->{3.847909927861464*^9},
+ CellLabel->"Out[6]=",ExpressionUUID->"fdcfb159-aaeb-498c-ac39-ac6fefd6dd1c"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"(*", " ", 
+   RowBox[{
+    RowBox[{"Routh", "-", 
+     RowBox[{
+     "Hurwitz", " ", "Stability", " ", "Criterion", " ", "for", " ", "deg", 
+      " ", "3", " ", 
+      RowBox[{"polynomial", ":", " ", 
+       RowBox[{
+        RowBox[{"First", " ", "check", " ", "that", " ", "a3"}], " ", ">", 
+        " ", 
+        RowBox[{
+        "0.", " ", "Then", " ", "stable", " ", "if", " ", "and", " ", "only", 
+         " ", "if", " ", "a2"}], " ", ">", " ", "0"}]}]}]}], ",", " ", 
+    RowBox[{"a0", " ", ">", " ", 
+     RowBox[{
+      RowBox[{"0", " ", "and", " ", "a2", "*", "a1"}], " ", "-", " ", 
+      RowBox[{"a3", "*", "a0"}]}], " ", ">", " ", "0"}]}], " ", "*)"}], " ", 
+  "\[IndentingNewLine]", "\[IndentingNewLine]", 
+  RowBox[{
+   RowBox[{"If", "[", 
+    RowBox[{
+     RowBox[{"a3", " ", "<", " ", "0"}], ",", " ", "\[IndentingNewLine]", 
+     RowBox[{
+      RowBox[{"a0", " ", "=", " ", 
+       RowBox[{"-", "a0"}]}], ";", " ", "\[IndentingNewLine]", 
+      RowBox[{"a1", " ", "=", " ", 
+       RowBox[{"-", "a1"}]}], ";", "\[IndentingNewLine]", 
+      RowBox[{"a2", " ", "=", " ", 
+       RowBox[{"-", "a2"}]}], ";", "\[IndentingNewLine]", 
+      RowBox[{"a3", " ", "=", " ", 
+       RowBox[{"-", "a3"}]}], ";", "\[IndentingNewLine]", 
+      RowBox[{
+      "Print", "[", 
+       "\"\<Initially a3 < 0, so flip signs of all coefficients. Now a3 > 0. \
+Continuing to check inequalities.\>\"", "]"}]}]}], "\[IndentingNewLine]", 
+    "]"}], "\[IndentingNewLine]", 
+   RowBox[{
+   "Print", "[", 
+    "\"\<Successfully checked that a3>0. Continuing to check \
+inequalities.\>\"", "]"}], "\[IndentingNewLine]", "\[IndentingNewLine]", 
+   RowBox[{"StringForm", "[", 
+    RowBox[{"\"\<Checking that a0 > 0:\na0 = ``\>\"", ",", " ", "a0"}], "]"}],
+    " ", "\[IndentingNewLine]", 
+   RowBox[{"StringForm", "[", 
+    RowBox[{"\"\<Checking that a2 > 0:\na2 = ``\>\"", ",", " ", "a2"}], "]"}],
+    " ", "\[IndentingNewLine]", "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{"u", " ", "=", " ", 
+     RowBox[{"Expand", "[", 
+      RowBox[{
+       RowBox[{"a2", "*", "a1"}], " ", "-", " ", 
+       RowBox[{"a3", "*", "a0"}]}], "]"}]}], ";"}], " ", 
+   "\[IndentingNewLine]", 
+   RowBox[{"StringForm", "[", 
+    RowBox[{
+    "\"\<Checking that u = a2*a1 - a3*a0 > 0:\nu = ``\>\"", ",", " ", "u"}], 
+    "]"}], "\[IndentingNewLine]", "\[IndentingNewLine]", 
+   RowBox[{"StringForm", "[", 
+    RowBox[{
+    "\"\<Alternatively, we extract coefficients of u, sorted by degree in \
+terms of ``:\>\"", ",", " ", 
+     RowBox[{"Variables", "[", "u", "]"}]}], " ", "]"}], " ", 
+   "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{"ucoeff", " ", "=", " ", 
+     RowBox[{"CoefficientArrays", "[", 
+      RowBox[{"u", ",", " ", 
+       RowBox[{"Variables", "[", "u", "]"}]}], "]"}]}], " ", ";"}], " ", 
+   "\[IndentingNewLine]", 
+   RowBox[{"For", "[", 
+    RowBox[{
+     RowBox[{"i", "=", "1"}], ",", " ", 
+     RowBox[{"i", " ", "<=", " ", 
+      RowBox[{"Length", "[", "ucoeff", "]"}]}], ",", " ", 
+     RowBox[{"i", "++"}], ",", " ", 
+     RowBox[{"(*", " ", 
+      RowBox[{"Printing", " ", 
+       RowBox[{"min", "/", "max"}], " ", "coefficients"}], " ", "*)"}], 
+     "\[IndentingNewLine]", 
+     RowBox[{
+      RowBox[{"If", "[", 
+       RowBox[{
+        RowBox[{"i", "==", "1"}], ",", "\[IndentingNewLine]", 
+        RowBox[{
+         RowBox[{"Print", "[", 
+          RowBox[{"StringForm", "[", 
+           RowBox[{"\"\<The constant term is ``.\>\"", ",", " ", 
+            RowBox[{"ucoeff", "[", 
+             RowBox[{"[", "1", "]"}], "]"}]}], "]"}], "]"}], ";"}]}], 
+       "\[IndentingNewLine]", "]"}], ";", "\[IndentingNewLine]", 
+      RowBox[{"If", "[", 
+       RowBox[{
+        RowBox[{"i", ">", "1"}], ",", "\[IndentingNewLine]", 
+        RowBox[{"Print", "[", 
+         RowBox[{"StringForm", "[", 
+          RowBox[{
+          "\"\<For deg `` terms, the min coefficient is ``, min-nonzero is \
+``, and max is ``.\>\"", ",", " ", 
+           RowBox[{"i", "-", "1"}], ",", "  ", 
+           RowBox[{"Min", "[", 
+            RowBox[{"ucoeff", "[", 
+             RowBox[{"[", "i", "]"}], "]"}], "]"}], ",", "  ", 
+           RowBox[{"Min", "[", 
+            RowBox[{
+             RowBox[{"ucoeff", "[", 
+              RowBox[{"[", "i", "]"}], "]"}], "[", "\"\<NonzeroValues\>\"", 
+             "]"}], "]"}], ",", "  ", 
+           RowBox[{"Max", "[", 
+            RowBox[{"ucoeff", "[", 
+             RowBox[{"[", "i", "]"}], "]"}], "]"}]}], "]"}], "]"}]}], 
+       "\[IndentingNewLine]", "]"}], ";"}]}], "\[IndentingNewLine]", 
+    "]"}]}]}]], "Input",
+ CellChangeTimes->{{3.84756501357124*^9, 3.847565024640876*^9}, {
+  3.847648471316362*^9, 3.847648488228301*^9}, {3.8476485717451973`*^9, 
+  3.8476486337088823`*^9}, {3.847909621246374*^9, 3.847909622725377*^9}, {
+  3.847909653129918*^9, 3.847909701039447*^9}, {3.847909759497603*^9, 
+  3.847909761792418*^9}, {3.847909876954081*^9, 3.847909886084856*^9}},
+ CellLabel->"In[11]:=",ExpressionUUID->"0950c854-cedf-425f-b6f5-e5982ae33541"],
+
+Cell[BoxData["\<\"Successfully checked that a3>0. Continuing to check \
+inequalities.\"\>"], "Print",
+ CellChangeTimes->{3.84790993061521*^9},
+ CellLabel->
+  "During evaluation of \
+In[11]:=",ExpressionUUID->"c5a182db-931a-49d4-8d6e-6930d94b4eb5"],
+
+Cell[BoxData[
+ InterpretationBox["\<\"Checking that a0 > 0:\\na0 = \
+\\!\\(\\*RowBox[{RowBox[{\\\"\[Alpha]\\\", \\\" \\\", \\\"\[Gamma]\\\"}], \
+\\\"+\\\", RowBox[{\\\"\[Beta]\\\", \\\" \\\", \
+SuperscriptBox[\\\"\[Gamma]\\\", \\\"2\\\"]}], \\\"+\\\", \
+RowBox[{\\\"\[Gamma]\\\", \\\" \\\", TemplateBox[List[\\\"\\\\[Kappa]\\\", \\\
+\"off\\\"], \\\"Superscript\\\", Rule[SyntaxForm, SuperscriptBox]]}], \\\"+\\\
+\", RowBox[{\\\"r\\\", \\\" \\\", \\\"\[Alpha]\\\", \\\" \\\", \\\"\[Gamma]\\\
+\", \\\" \\\", TemplateBox[List[\\\"\\\\[Kappa]\\\", \\\"on\\\"], \
+\\\"Superscript\\\", Rule[SyntaxForm, SuperscriptBox]]}], \\\"+\\\", RowBox[{\
+\\\"R\\\", \\\" \\\", \\\"\[Beta]\\\", \\\" \\\", \\\"\[Gamma]\\\", \\\" \
+\\\", TemplateBox[List[\\\"\\\\[Kappa]\\\", \\\"on\\\"], \\\"Superscript\\\", \
+Rule[SyntaxForm, SuperscriptBox]]}]}]\\)\"\>",
+  StringForm[
+  "Checking that a0 > 0:\na0 = ``", $CellContext`\[Alpha] $CellContext`\
+\[Gamma] + $CellContext`\[Beta] $CellContext`\[Gamma]^2 + $CellContext`\
+\[Gamma] Superscript[$CellContext`\[Kappa], $CellContext`off] + \
+$CellContext`r $CellContext`\[Alpha] $CellContext`\[Gamma] 
+    Superscript[$CellContext`\[Kappa], $CellContext`on] + $CellContext`R \
+$CellContext`\[Beta] $CellContext`\[Gamma] 
+    Superscript[$CellContext`\[Kappa], $CellContext`on]],
+  Editable->False]], "Output",
+ CellChangeTimes->{3.847909930616984*^9},
+ CellLabel->"Out[13]=",ExpressionUUID->"de38a4bc-a451-432e-a21b-a262b0fd127a"],
+
+Cell[BoxData[
+ InterpretationBox["\<\"Checking that a2 > 0:\\na2 = \\!\\(\\*RowBox[{\\\"1\\\
+\", \\\"+\\\", \\\"\[Alpha]\\\", \\\"+\\\", \\\"\[Gamma]\\\", \\\"+\\\", \
+RowBox[{\\\"\[Beta]\\\", \\\" \\\", \\\"\[Gamma]\\\"}], \\\"+\\\", \
+TemplateBox[List[\\\"\\\\[Kappa]\\\", \\\"off\\\"], \\\"Superscript\\\", \
+Rule[SyntaxForm, SuperscriptBox]], \\\"+\\\", RowBox[{\\\"r\\\", \\\" \\\", \
+TemplateBox[List[\\\"\\\\[Kappa]\\\", \\\"on\\\"], \\\"Superscript\\\", \
+Rule[SyntaxForm, SuperscriptBox]]}], \\\"+\\\", RowBox[{\\\"R\\\", \\\" \\\", \
+TemplateBox[List[\\\"\\\\[Kappa]\\\", \\\"on\\\"], \\\"Superscript\\\", \
+Rule[SyntaxForm, SuperscriptBox]]}]}]\\)\"\>",
+  StringForm[
+  "Checking that a2 > 0:\na2 = ``", 
+   1 + $CellContext`\[Alpha] + $CellContext`\[Gamma] + $CellContext`\[Beta] \
+$CellContext`\[Gamma] + 
+   Superscript[$CellContext`\[Kappa], $CellContext`off] + $CellContext`r 
+    Superscript[$CellContext`\[Kappa], $CellContext`on] + $CellContext`R 
+    Superscript[$CellContext`\[Kappa], $CellContext`on]],
+  Editable->False]], "Output",
+ CellChangeTimes->{3.8479099306184893`*^9},
+ CellLabel->"Out[14]=",ExpressionUUID->"ba7d20d2-f8de-49f7-b9cc-8f84d7adece8"],
+
+Cell[BoxData[
+ InterpretationBox["\<\"Checking that u = a2*a1 - a3*a0 > 0:\\nu = \
+\\!\\(\\*RowBox[{\\\"\[Alpha]\\\", \\\"+\\\", \
+SuperscriptBox[\\\"\[Alpha]\\\", \\\"2\\\"], \\\"+\\\", \\\"\[Gamma]\\\", \
+\\\"+\\\", RowBox[{\\\"2\\\", \\\" \\\", \\\"\[Alpha]\\\", \\\" \\\", \\\"\
+\[Gamma]\\\"}], \\\"+\\\", RowBox[{SuperscriptBox[\\\"\[Alpha]\\\", \
+\\\"2\\\"], \\\" \\\", \\\"\[Gamma]\\\"}], \\\"+\\\", \
+RowBox[{\\\"\[Beta]\\\", \\\" \\\", \\\"\[Gamma]\\\"}], \\\"+\\\", RowBox[{\\\
+\"2\\\", \\\" \\\", \\\"\[Alpha]\\\", \\\" \\\", \\\"\[Beta]\\\", \\\" \\\", \
+\\\"\[Gamma]\\\"}], \\\"+\\\", SuperscriptBox[\\\"\[Gamma]\\\", \\\"2\\\"], \
+\\\"+\\\", RowBox[{\\\"\[Alpha]\\\", \\\" \\\", SuperscriptBox[\\\"\[Gamma]\\\
+\", \\\"2\\\"]}], \\\"+\\\", RowBox[{\\\"2\\\", \\\" \\\", \\\"\[Beta]\\\", \
+\\\" \\\", SuperscriptBox[\\\"\[Gamma]\\\", \\\"2\\\"]}], \\\"+\\\", RowBox[{\
+\\\"2\\\", \\\" \\\", \\\"\[Alpha]\\\", \\\" \\\", \\\"\[Beta]\\\", \\\" \
+\\\", SuperscriptBox[\\\"\[Gamma]\\\", \\\"2\\\"]}], \\\"+\\\", \
+RowBox[{SuperscriptBox[\\\"\[Beta]\\\", \\\"2\\\"], \\\" \\\", \
+SuperscriptBox[\\\"\[Gamma]\\\", \\\"2\\\"]}], \\\"+\\\", RowBox[{\\\"\[Beta]\
+\\\", \\\" \\\", SuperscriptBox[\\\"\[Gamma]\\\", \\\"3\\\"]}], \\\"+\\\", \
+RowBox[{SuperscriptBox[\\\"\[Beta]\\\", \\\"2\\\"], \\\" \\\", \
+SuperscriptBox[\\\"\[Gamma]\\\", \\\"3\\\"]}], \\\"+\\\", TemplateBox[List[\\\
+\"\\\\[Kappa]\\\", \\\"off\\\"], \\\"Superscript\\\", Rule[SyntaxForm, \
+SuperscriptBox]], \\\"+\\\", RowBox[{\\\"2\\\", \\\" \\\", \\\"\[Alpha]\\\", \
+\\\" \\\", TemplateBox[List[\\\"\\\\[Kappa]\\\", \\\"off\\\"], \
+\\\"Superscript\\\", Rule[SyntaxForm, SuperscriptBox]]}], \\\"+\\\", RowBox[{\
+\\\"2\\\", \\\" \\\", \\\"\[Gamma]\\\", \\\" \\\", \
+TemplateBox[List[\\\"\\\\[Kappa]\\\", \\\"off\\\"], \\\"Superscript\\\", \
+Rule[SyntaxForm, SuperscriptBox]]}], \\\"+\\\", RowBox[{\\\"2\\\", \\\" \\\", \
+\\\"\[Alpha]\\\", \\\" \\\", \\\"\[Gamma]\\\", \\\" \\\", TemplateBox[List[\\\
+\"\\\\[Kappa]\\\", \\\"off\\\"], \\\"Superscript\\\", Rule[SyntaxForm, \
+SuperscriptBox]]}], \\\"+\\\", RowBox[{\\\"2\\\", \\\" \\\", \\\"\[Beta]\\\", \
+\\\" \\\", \\\"\[Gamma]\\\", \\\" \\\", TemplateBox[List[\\\"\\\\[Kappa]\\\", \
+\\\"off\\\"], \\\"Superscript\\\", Rule[SyntaxForm, SuperscriptBox]]}], \\\"+\
+\\\", RowBox[{SuperscriptBox[\\\"\[Gamma]\\\", \\\"2\\\"], \\\" \\\", \
+TemplateBox[List[\\\"\\\\[Kappa]\\\", \\\"off\\\"], \\\"Superscript\\\", \
+Rule[SyntaxForm, SuperscriptBox]]}], \\\"+\\\", RowBox[{\\\"2\\\", \\\" \\\", \
+\\\"\[Beta]\\\", \\\" \\\", SuperscriptBox[\\\"\[Gamma]\\\", \\\"2\\\"], \\\" \
+\\\", TemplateBox[List[\\\"\\\\[Kappa]\\\", \\\"off\\\"], \
+\\\"Superscript\\\", Rule[SyntaxForm, SuperscriptBox]]}], \\\"+\\\", \
+SuperscriptBox[RowBox[{\\\"(\\\", TemplateBox[List[\\\"\\\\[Kappa]\\\", \
+\\\"off\\\"], \\\"Superscript\\\", Rule[SyntaxForm, SuperscriptBox]], \\\")\\\
+\"}], \\\"2\\\"], \\\"+\\\", RowBox[{\\\"\[Gamma]\\\", \\\" \\\", \
+SuperscriptBox[RowBox[{\\\"(\\\", TemplateBox[List[\\\"\\\\[Kappa]\\\", \
+\\\"off\\\"], \\\"Superscript\\\", Rule[SyntaxForm, SuperscriptBox]], \\\")\\\
+\"}], \\\"2\\\"]}], \\\"+\\\", RowBox[{\\\"R\\\", \\\" \\\", \
+TemplateBox[List[\\\"\\\\[Kappa]\\\", \\\"on\\\"], \\\"Superscript\\\", \
+Rule[SyntaxForm, SuperscriptBox]]}], \\\"+\\\", RowBox[{\\\"2\\\", \\\" \\\", \
+\\\"r\\\", \\\" \\\", \\\"\[Alpha]\\\", \\\" \\\", \
+TemplateBox[List[\\\"\\\\[Kappa]\\\", \\\"on\\\"], \\\"Superscript\\\", \
+Rule[SyntaxForm, SuperscriptBox]]}], \\\"+\\\", RowBox[{\\\"2\\\", \\\" \\\", \
+\\\"R\\\", \\\" \\\", \\\"\[Alpha]\\\", \\\" \\\", \
+TemplateBox[List[\\\"\\\\[Kappa]\\\", \\\"on\\\"], \\\"Superscript\\\", \
+Rule[SyntaxForm, SuperscriptBox]]}], \\\"+\\\", RowBox[{\\\"r\\\", \\\" \\\", \
+SuperscriptBox[\\\"\[Alpha]\\\", \\\"2\\\"], \\\" \\\", TemplateBox[List[\\\"\
+\\\\[Kappa]\\\", \\\"on\\\"], \\\"Superscript\\\", Rule[SyntaxForm, \
+SuperscriptBox]]}], \\\"+\\\", RowBox[{\\\"2\\\", \\\" \\\", \\\"r\\\", \\\" \
+\\\", \\\"\[Gamma]\\\", \\\" \\\", TemplateBox[List[\\\"\\\\[Kappa]\\\", \
+\\\"on\\\"], \\\"Superscript\\\", Rule[SyntaxForm, SuperscriptBox]]}], \
+\\\"+\\\", RowBox[{\\\"2\\\", \\\" \\\", \\\"R\\\", \\\" \\\", \\\"\[Gamma]\\\
+\", \\\" \\\", TemplateBox[List[\\\"\\\\[Kappa]\\\", \\\"on\\\"], \
+\\\"Superscript\\\", Rule[SyntaxForm, SuperscriptBox]]}], \\\"+\\\", RowBox[{\
+\\\"2\\\", \\\" \\\", \\\"r\\\", \\\" \\\", \\\"\[Alpha]\\\", \\\" \\\", \\\"\
+\[Gamma]\\\", \\\" \\\", TemplateBox[List[\\\"\\\\[Kappa]\\\", \\\"on\\\"], \
+\\\"Superscript\\\", Rule[SyntaxForm, SuperscriptBox]]}], \\\"+\\\", RowBox[{\
+\\\"R\\\", \\\" \\\", \\\"\[Alpha]\\\", \\\" \\\", \\\"\[Gamma]\\\", \\\" \
+\\\", TemplateBox[List[\\\"\\\\[Kappa]\\\", \\\"on\\\"], \\\"Superscript\\\", \
+Rule[SyntaxForm, SuperscriptBox]]}], \\\"+\\\", RowBox[{\\\"r\\\", \\\" \\\", \
+\\\"\[Beta]\\\", \\\" \\\", \\\"\[Gamma]\\\", \\\" \\\", \
+TemplateBox[List[\\\"\\\\[Kappa]\\\", \\\"on\\\"], \\\"Superscript\\\", \
+Rule[SyntaxForm, SuperscriptBox]]}], \\\"+\\\", RowBox[{\\\"2\\\", \\\" \\\", \
+\\\"R\\\", \\\" \\\", \\\"\[Beta]\\\", \\\" \\\", \\\"\[Gamma]\\\", \\\" \
+\\\", TemplateBox[List[\\\"\\\\[Kappa]\\\", \\\"on\\\"], \\\"Superscript\\\", \
+Rule[SyntaxForm, SuperscriptBox]]}], \\\"+\\\", RowBox[{\\\"r\\\", \\\" \\\", \
+\\\"\[Alpha]\\\", \\\" \\\", \\\"\[Beta]\\\", \\\" \\\", \\\"\[Gamma]\\\", \\\
+\" \\\", TemplateBox[List[\\\"\\\\[Kappa]\\\", \\\"on\\\"], \\\"Superscript\\\
+\", Rule[SyntaxForm, SuperscriptBox]]}], \\\"+\\\", RowBox[{\\\"R\\\", \\\" \
+\\\", \\\"\[Alpha]\\\", \\\" \\\", \\\"\[Beta]\\\", \\\" \\\", \\\"\[Gamma]\\\
+\", \\\" \\\", TemplateBox[List[\\\"\\\\[Kappa]\\\", \\\"on\\\"], \
+\\\"Superscript\\\", Rule[SyntaxForm, SuperscriptBox]]}], \\\"+\\\", RowBox[{\
+\\\"r\\\", \\\" \\\", SuperscriptBox[\\\"\[Gamma]\\\", \\\"2\\\"], \\\" \\\", \
+TemplateBox[List[\\\"\\\\[Kappa]\\\", \\\"on\\\"], \\\"Superscript\\\", \
+Rule[SyntaxForm, SuperscriptBox]]}], \\\"+\\\", RowBox[{\\\"2\\\", \\\" \\\", \
+\\\"r\\\", \\\" \\\", \\\"\[Beta]\\\", \\\" \\\", SuperscriptBox[\\\"\[Gamma]\
+\\\", \\\"2\\\"], \\\" \\\", TemplateBox[List[\\\"\\\\[Kappa]\\\", \
+\\\"on\\\"], \\\"Superscript\\\", Rule[SyntaxForm, SuperscriptBox]]}], \
+\\\"+\\\", RowBox[{\\\"2\\\", \\\" \\\", \\\"R\\\", \\\" \\\", \
+\\\"\[Beta]\\\", \\\" \\\", SuperscriptBox[\\\"\[Gamma]\\\", \\\"2\\\"], \\\" \
+\\\", TemplateBox[List[\\\"\\\\[Kappa]\\\", \\\"on\\\"], \\\"Superscript\\\", \
+Rule[SyntaxForm, SuperscriptBox]]}], \\\"+\\\", RowBox[{\\\"R\\\", \\\" \\\", \
+SuperscriptBox[\\\"\[Beta]\\\", \\\"2\\\"], \\\" \\\", SuperscriptBox[\\\"\
+\[Gamma]\\\", \\\"2\\\"], \\\" \\\", TemplateBox[List[\\\"\\\\[Kappa]\\\", \\\
+\"on\\\"], \\\"Superscript\\\", Rule[SyntaxForm, SuperscriptBox]]}], \
+\\\"+\\\", RowBox[{\\\"r\\\", \\\" \\\", \
+TemplateBox[List[\\\"\\\\[Kappa]\\\", \\\"off\\\"], \\\"Superscript\\\", \
+Rule[SyntaxForm, SuperscriptBox]], \\\" \\\", \
+TemplateBox[List[\\\"\\\\[Kappa]\\\", \\\"on\\\"], \\\"Superscript\\\", \
+Rule[SyntaxForm, SuperscriptBox]]}], \\\"+\\\", RowBox[{\\\"2\\\", \\\" \\\", \
+\\\"R\\\", \\\" \\\", TemplateBox[List[\\\"\\\\[Kappa]\\\", \\\"off\\\"], \
+\\\"Superscript\\\", Rule[SyntaxForm, SuperscriptBox]], \\\" \\\", \
+TemplateBox[List[\\\"\\\\[Kappa]\\\", \\\"on\\\"], \\\"Superscript\\\", \
+Rule[SyntaxForm, SuperscriptBox]]}], \\\"+\\\", RowBox[{\\\"r\\\", \\\" \\\", \
+\\\"\[Alpha]\\\", \\\" \\\", TemplateBox[List[\\\"\\\\[Kappa]\\\", \
+\\\"off\\\"], \\\"Superscript\\\", Rule[SyntaxForm, SuperscriptBox]], \\\" \\\
+\", TemplateBox[List[\\\"\\\\[Kappa]\\\", \\\"on\\\"], \\\"Superscript\\\", \
+Rule[SyntaxForm, SuperscriptBox]]}], \\\"+\\\", RowBox[{\\\"2\\\", \\\" \\\", \
+\\\"r\\\", \\\" \\\", \\\"\[Gamma]\\\", \\\" \\\", \
+TemplateBox[List[\\\"\\\\[Kappa]\\\", \\\"off\\\"], \\\"Superscript\\\", \
+Rule[SyntaxForm, SuperscriptBox]], \\\" \\\", \
+TemplateBox[List[\\\"\\\\[Kappa]\\\", \\\"on\\\"], \\\"Superscript\\\", \
+Rule[SyntaxForm, SuperscriptBox]]}], \\\"+\\\", RowBox[{\\\"R\\\", \\\" \\\", \
+\\\"\[Gamma]\\\", \\\" \\\", TemplateBox[List[\\\"\\\\[Kappa]\\\", \
+\\\"off\\\"], \\\"Superscript\\\", Rule[SyntaxForm, SuperscriptBox]], \\\" \\\
+\", TemplateBox[List[\\\"\\\\[Kappa]\\\", \\\"on\\\"], \\\"Superscript\\\", \
+Rule[SyntaxForm, SuperscriptBox]]}], \\\"+\\\", RowBox[{\\\"R\\\", \\\" \\\", \
+\\\"\[Beta]\\\", \\\" \\\", \\\"\[Gamma]\\\", \\\" \\\", \
+TemplateBox[List[\\\"\\\\[Kappa]\\\", \\\"off\\\"], \\\"Superscript\\\", \
+Rule[SyntaxForm, SuperscriptBox]], \\\" \\\", \
+TemplateBox[List[\\\"\\\\[Kappa]\\\", \\\"on\\\"], \\\"Superscript\\\", \
+Rule[SyntaxForm, SuperscriptBox]]}], \\\"+\\\", RowBox[{\\\"r\\\", \\\" \\\", \
+\\\"R\\\", \\\" \\\", SuperscriptBox[RowBox[{\\\"(\\\", TemplateBox[List[\\\"\
+\\\\[Kappa]\\\", \\\"on\\\"], \\\"Superscript\\\", Rule[SyntaxForm, \
+SuperscriptBox]], \\\")\\\"}], \\\"2\\\"]}], \\\"+\\\", \
+RowBox[{SuperscriptBox[\\\"R\\\", \\\"2\\\"], \\\" \\\", \
+SuperscriptBox[RowBox[{\\\"(\\\", TemplateBox[List[\\\"\\\\[Kappa]\\\", \
+\\\"on\\\"], \\\"Superscript\\\", Rule[SyntaxForm, SuperscriptBox]], \
+\\\")\\\"}], \\\"2\\\"]}], \\\"+\\\", RowBox[{SuperscriptBox[\\\"r\\\", \\\"2\
+\\\"], \\\" \\\", \\\"\[Alpha]\\\", \\\" \\\", SuperscriptBox[RowBox[{\\\"(\\\
+\", TemplateBox[List[\\\"\\\\[Kappa]\\\", \\\"on\\\"], \\\"Superscript\\\", \
+Rule[SyntaxForm, SuperscriptBox]], \\\")\\\"}], \\\"2\\\"]}], \\\"+\\\", \
+RowBox[{\\\"r\\\", \\\" \\\", \\\"R\\\", \\\" \\\", \\\"\[Alpha]\\\", \\\" \\\
+\", SuperscriptBox[RowBox[{\\\"(\\\", TemplateBox[List[\\\"\\\\[Kappa]\\\", \
+\\\"on\\\"], \\\"Superscript\\\", Rule[SyntaxForm, SuperscriptBox]], \
+\\\")\\\"}], \\\"2\\\"]}], \\\"+\\\", RowBox[{SuperscriptBox[\\\"r\\\", \\\"2\
+\\\"], \\\" \\\", \\\"\[Gamma]\\\", \\\" \\\", SuperscriptBox[RowBox[{\\\"(\\\
+\", TemplateBox[List[\\\"\\\\[Kappa]\\\", \\\"on\\\"], \\\"Superscript\\\", \
+Rule[SyntaxForm, SuperscriptBox]], \\\")\\\"}], \\\"2\\\"]}], \\\"+\\\", \
+RowBox[{\\\"r\\\", \\\" \\\", \\\"R\\\", \\\" \\\", \\\"\[Gamma]\\\", \\\" \\\
+\", SuperscriptBox[RowBox[{\\\"(\\\", TemplateBox[List[\\\"\\\\[Kappa]\\\", \
+\\\"on\\\"], \\\"Superscript\\\", Rule[SyntaxForm, SuperscriptBox]], \
+\\\")\\\"}], \\\"2\\\"]}], \\\"+\\\", RowBox[{\\\"r\\\", \\\" \\\", \
+\\\"R\\\", \\\" \\\", \\\"\[Beta]\\\", \\\" \\\", \\\"\[Gamma]\\\", \\\" \
+\\\", SuperscriptBox[RowBox[{\\\"(\\\", TemplateBox[List[\\\"\\\\[Kappa]\\\", \
+\\\"on\\\"], \\\"Superscript\\\", Rule[SyntaxForm, SuperscriptBox]], \
+\\\")\\\"}], \\\"2\\\"]}], \\\"+\\\", RowBox[{SuperscriptBox[\\\"R\\\", \\\"2\
+\\\"], \\\" \\\", \\\"\[Beta]\\\", \\\" \\\", \\\"\[Gamma]\\\", \\\" \\\", \
+SuperscriptBox[RowBox[{\\\"(\\\", TemplateBox[List[\\\"\\\\[Kappa]\\\", \
+\\\"on\\\"], \\\"Superscript\\\", Rule[SyntaxForm, SuperscriptBox]], \
+\\\")\\\"}], \\\"2\\\"]}]}]\\)\"\>",
+  StringForm[
+  "Checking that u = a2*a1 - a3*a0 > 0:\nu = ``", $CellContext`\[Alpha] + \
+$CellContext`\[Alpha]^2 + $CellContext`\[Gamma] + 
+   2 $CellContext`\[Alpha] $CellContext`\[Gamma] + $CellContext`\[Alpha]^2 \
+$CellContext`\[Gamma] + $CellContext`\[Beta] $CellContext`\[Gamma] + 
+   2 $CellContext`\[Alpha] $CellContext`\[Beta] $CellContext`\[Gamma] + \
+$CellContext`\[Gamma]^2 + $CellContext`\[Alpha] $CellContext`\[Gamma]^2 + 
+   2 $CellContext`\[Beta] $CellContext`\[Gamma]^2 + 
+   2 $CellContext`\[Alpha] $CellContext`\[Beta] $CellContext`\[Gamma]^2 + \
+$CellContext`\[Beta]^2 $CellContext`\[Gamma]^2 + $CellContext`\[Beta] \
+$CellContext`\[Gamma]^3 + $CellContext`\[Beta]^2 $CellContext`\[Gamma]^3 + 
+   Superscript[$CellContext`\[Kappa], $CellContext`off] + 
+   2 $CellContext`\[Alpha] 
+    Superscript[$CellContext`\[Kappa], $CellContext`off] + 
+   2 $CellContext`\[Gamma] 
+    Superscript[$CellContext`\[Kappa], $CellContext`off] + 
+   2 $CellContext`\[Alpha] $CellContext`\[Gamma] 
+    Superscript[$CellContext`\[Kappa], $CellContext`off] + 
+   2 $CellContext`\[Beta] $CellContext`\[Gamma] 
+    Superscript[$CellContext`\[Kappa], $CellContext`off] + $CellContext`\
+\[Gamma]^2 Superscript[$CellContext`\[Kappa], $CellContext`off] + 
+   2 $CellContext`\[Beta] $CellContext`\[Gamma]^2 
+    Superscript[$CellContext`\[Kappa], $CellContext`off] + 
+   Superscript[$CellContext`\[Kappa], $CellContext`off]^2 + $CellContext`\
+\[Gamma] Superscript[$CellContext`\[Kappa], $CellContext`off]^2 + \
+$CellContext`R Superscript[$CellContext`\[Kappa], $CellContext`on] + 
+   2 $CellContext`r $CellContext`\[Alpha] 
+    Superscript[$CellContext`\[Kappa], $CellContext`on] + 
+   2 $CellContext`R $CellContext`\[Alpha] 
+    Superscript[$CellContext`\[Kappa], $CellContext`on] + $CellContext`r \
+$CellContext`\[Alpha]^2 Superscript[$CellContext`\[Kappa], $CellContext`on] + 
+   2 $CellContext`r $CellContext`\[Gamma] 
+    Superscript[$CellContext`\[Kappa], $CellContext`on] + 
+   2 $CellContext`R $CellContext`\[Gamma] 
+    Superscript[$CellContext`\[Kappa], $CellContext`on] + 
+   2 $CellContext`r $CellContext`\[Alpha] $CellContext`\[Gamma] 
+    Superscript[$CellContext`\[Kappa], $CellContext`on] + $CellContext`R \
+$CellContext`\[Alpha] $CellContext`\[Gamma] 
+    Superscript[$CellContext`\[Kappa], $CellContext`on] + $CellContext`r \
+$CellContext`\[Beta] $CellContext`\[Gamma] 
+    Superscript[$CellContext`\[Kappa], $CellContext`on] + 
+   2 $CellContext`R $CellContext`\[Beta] $CellContext`\[Gamma] 
+    Superscript[$CellContext`\[Kappa], $CellContext`on] + $CellContext`r \
+$CellContext`\[Alpha] $CellContext`\[Beta] $CellContext`\[Gamma] 
+    Superscript[$CellContext`\[Kappa], $CellContext`on] + $CellContext`R \
+$CellContext`\[Alpha] $CellContext`\[Beta] $CellContext`\[Gamma] 
+    Superscript[$CellContext`\[Kappa], $CellContext`on] + $CellContext`r \
+$CellContext`\[Gamma]^2 Superscript[$CellContext`\[Kappa], $CellContext`on] + 
+   2 $CellContext`r $CellContext`\[Beta] $CellContext`\[Gamma]^2 
+    Superscript[$CellContext`\[Kappa], $CellContext`on] + 
+   2 $CellContext`R $CellContext`\[Beta] $CellContext`\[Gamma]^2 
+    Superscript[$CellContext`\[Kappa], $CellContext`on] + $CellContext`R \
+$CellContext`\[Beta]^2 $CellContext`\[Gamma]^2 
+    Superscript[$CellContext`\[Kappa], $CellContext`on] + $CellContext`r 
+    Superscript[$CellContext`\[Kappa], $CellContext`off] 
+    Superscript[$CellContext`\[Kappa], $CellContext`on] + 
+   2 $CellContext`R Superscript[$CellContext`\[Kappa], $CellContext`off] 
+    Superscript[$CellContext`\[Kappa], $CellContext`on] + $CellContext`r \
+$CellContext`\[Alpha] Superscript[$CellContext`\[Kappa], $CellContext`off] 
+    Superscript[$CellContext`\[Kappa], $CellContext`on] + 
+   2 $CellContext`r $CellContext`\[Gamma] 
+    Superscript[$CellContext`\[Kappa], $CellContext`off] 
+    Superscript[$CellContext`\[Kappa], $CellContext`on] + $CellContext`R \
+$CellContext`\[Gamma] Superscript[$CellContext`\[Kappa], $CellContext`off] 
+    Superscript[$CellContext`\[Kappa], $CellContext`on] + $CellContext`R \
+$CellContext`\[Beta] $CellContext`\[Gamma] 
+    Superscript[$CellContext`\[Kappa], $CellContext`off] 
+    Superscript[$CellContext`\[Kappa], $CellContext`on] + $CellContext`r \
+$CellContext`R 
+    Superscript[$CellContext`\[Kappa], $CellContext`on]^2 + $CellContext`R^2 
+    Superscript[$CellContext`\[Kappa], $CellContext`on]^2 + $CellContext`r^2 \
+$CellContext`\[Alpha] 
+    Superscript[$CellContext`\[Kappa], $CellContext`on]^2 + $CellContext`r \
+$CellContext`R $CellContext`\[Alpha] 
+    Superscript[$CellContext`\[Kappa], $CellContext`on]^2 + $CellContext`r^2 \
+$CellContext`\[Gamma] 
+    Superscript[$CellContext`\[Kappa], $CellContext`on]^2 + $CellContext`r \
+$CellContext`R $CellContext`\[Gamma] 
+    Superscript[$CellContext`\[Kappa], $CellContext`on]^2 + $CellContext`r \
+$CellContext`R $CellContext`\[Beta] $CellContext`\[Gamma] 
+    Superscript[$CellContext`\[Kappa], $CellContext`on]^2 + $CellContext`R^2 \
+$CellContext`\[Beta] $CellContext`\[Gamma] 
+    Superscript[$CellContext`\[Kappa], $CellContext`on]^2],
+  Editable->False]], "Output",
+ CellChangeTimes->{3.847909930620475*^9},
+ CellLabel->"Out[16]=",ExpressionUUID->"7b9b9136-7698-4774-aa37-5fc5dcd6d159"],
+
+Cell[BoxData[
+ InterpretationBox["\<\"Alternatively, we extract coefficients of u, sorted \
+by degree in terms of \\!\\(\\*RowBox[{\\\"{\\\", RowBox[{\\\"\[Alpha]\\\", \
+\\\",\\\", \\\"\[Gamma]\\\", \\\",\\\", \\\"\[Beta]\\\", \\\",\\\", \
+TemplateBox[List[\\\"\\\\[Kappa]\\\", \\\"off\\\"], \\\"Superscript\\\", \
+Rule[SyntaxForm, SuperscriptBox]], \\\",\\\", \\\"R\\\", \\\",\\\", \
+TemplateBox[List[\\\"\\\\[Kappa]\\\", \\\"on\\\"], \\\"Superscript\\\", \
+Rule[SyntaxForm, SuperscriptBox]], \\\",\\\", \\\"r\\\"}], \
+\\\"}\\\"}]\\):\"\>",
+  StringForm[
+  "Alternatively, we extract coefficients of u, sorted by degree in terms of \
+``:", {$CellContext`\[Alpha], $CellContext`\[Gamma], $CellContext`\[Beta], 
+    Superscript[$CellContext`\[Kappa], $CellContext`off], $CellContext`R, 
+    Superscript[$CellContext`\[Kappa], $CellContext`on], $CellContext`r}],
+  Editable->False]], "Output",
+ CellChangeTimes->{3.847909930625095*^9},
+ CellLabel->"Out[17]=",ExpressionUUID->"d2e5d31d-a2da-4ee8-accd-6d2b5cff907e"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ InterpretationBox["\<\"The constant term is \\!\\(\\*RowBox[{\\\"0\\\"}]\\).\
+\"\>",
+  StringForm["The constant term is ``.", 0],
+  Editable->False]], "Print",
+ CellChangeTimes->{3.847909930626549*^9},
+ CellLabel->
+  "During evaluation of \
+In[11]:=",ExpressionUUID->"9c18cf5f-feaf-4d0e-b6b2-1011c5c363ed"],
+
+Cell[BoxData[
+ InterpretationBox["\<\"For deg \\!\\(\\*RowBox[{\\\"1\\\"}]\\) terms, the \
+min coefficient is \\!\\(\\*RowBox[{\\\"0\\\"}]\\), min-nonzero is \
+\\!\\(\\*RowBox[{\\\"1\\\"}]\\), and max is \
+\\!\\(\\*RowBox[{\\\"1\\\"}]\\).\"\>",
+  StringForm[
+  "For deg `` terms, the min coefficient is ``, min-nonzero is ``, and max is \
+``.", 1, 0, 1, 1],
+  Editable->False]], "Print",
+ CellChangeTimes->{3.84790993062768*^9},
+ CellLabel->
+  "During evaluation of \
+In[11]:=",ExpressionUUID->"0bcbe465-ace3-4404-8161-9e1fcfa9da1b"],
+
+Cell[BoxData[
+ InterpretationBox["\<\"For deg \\!\\(\\*RowBox[{\\\"2\\\"}]\\) terms, the \
+min coefficient is \\!\\(\\*RowBox[{\\\"0\\\"}]\\), min-nonzero is \
+\\!\\(\\*RowBox[{\\\"1\\\"}]\\), and max is \
+\\!\\(\\*RowBox[{\\\"2\\\"}]\\).\"\>",
+  StringForm[
+  "For deg `` terms, the min coefficient is ``, min-nonzero is ``, and max is \
+``.", 2, 0, 1, 2],
+  Editable->False]], "Print",
+ CellChangeTimes->{3.847909930629128*^9},
+ CellLabel->
+  "During evaluation of \
+In[11]:=",ExpressionUUID->"38b428f0-d786-414d-af50-10aa0757add6"],
+
+Cell[BoxData[
+ InterpretationBox["\<\"For deg \\!\\(\\*RowBox[{\\\"3\\\"}]\\) terms, the \
+min coefficient is \\!\\(\\*RowBox[{\\\"0\\\"}]\\), min-nonzero is \
+\\!\\(\\*RowBox[{\\\"1\\\"}]\\), and max is \
+\\!\\(\\*RowBox[{\\\"2\\\"}]\\).\"\>",
+  StringForm[
+  "For deg `` terms, the min coefficient is ``, min-nonzero is ``, and max is \
+``.", 3, 0, 1, 2],
+  Editable->False]], "Print",
+ CellChangeTimes->{3.847909930630105*^9},
+ CellLabel->
+  "During evaluation of \
+In[11]:=",ExpressionUUID->"ba0f39f0-f7dc-4ff6-a28e-7884381c0ea2"],
+
+Cell[BoxData[
+ InterpretationBox["\<\"For deg \\!\\(\\*RowBox[{\\\"4\\\"}]\\) terms, the \
+min coefficient is \\!\\(\\*RowBox[{\\\"0\\\"}]\\), min-nonzero is \
+\\!\\(\\*RowBox[{\\\"1\\\"}]\\), and max is \
+\\!\\(\\*RowBox[{\\\"2\\\"}]\\).\"\>",
+  StringForm[
+  "For deg `` terms, the min coefficient is ``, min-nonzero is ``, and max is \
+``.", 4, 0, 1, 2],
+  Editable->False]], "Print",
+ CellChangeTimes->{3.8479099306310177`*^9},
+ CellLabel->
+  "During evaluation of \
+In[11]:=",ExpressionUUID->"dbdb8004-8597-4af6-9da0-1ec97272a3c7"],
+
+Cell[BoxData[
+ InterpretationBox["\<\"For deg \\!\\(\\*RowBox[{\\\"5\\\"}]\\) terms, the \
+min coefficient is \\!\\(\\*RowBox[{\\\"0\\\"}]\\), min-nonzero is \
+\\!\\(\\*RowBox[{\\\"1\\\"}]\\), and max is \
+\\!\\(\\*RowBox[{\\\"2\\\"}]\\).\"\>",
+  StringForm[
+  "For deg `` terms, the min coefficient is ``, min-nonzero is ``, and max is \
+``.", 5, 0, 1, 2],
+  Editable->False]], "Print",
+ CellChangeTimes->{3.847909930631999*^9},
+ CellLabel->
+  "During evaluation of \
+In[11]:=",ExpressionUUID->"ebccb069-c875-4dc4-b696-5c9a21f0b8d9"],
+
+Cell[BoxData[
+ InterpretationBox["\<\"For deg \\!\\(\\*RowBox[{\\\"6\\\"}]\\) terms, the \
+min coefficient is \\!\\(\\*RowBox[{\\\"0\\\"}]\\), min-nonzero is \
+\\!\\(\\*RowBox[{\\\"1\\\"}]\\), and max is \
+\\!\\(\\*RowBox[{\\\"1\\\"}]\\).\"\>",
+  StringForm[
+  "For deg `` terms, the min coefficient is ``, min-nonzero is ``, and max is \
+``.", 6, 0, 1, 1],
+  Editable->False]], "Print",
+ CellChangeTimes->{3.847909930632968*^9},
+ CellLabel->
+  "During evaluation of \
+In[11]:=",ExpressionUUID->"3869e147-48f3-40c0-877b-6584594cce59"]
+}, Open  ]]
+}, Open  ]]
+},
+WindowSize->{1085, 847},
+WindowMargins->{{5, Automatic}, {Automatic, 0}},
+FrontEndVersion->"12.3 for Mac OS X ARM (64-bit) (July 9, 2021)",
+StyleDefinitions->"Default.nb",
+ExpressionUUID->"3d49748a-1d53-48b8-98e9-a2a47ba401f4"
+]
+(* End of Notebook Content *)
+
+(* Internal cache information *)
+(*CellTagsOutline
+CellTagsIndex->{}
+*)
+(*CellTagsIndex
+CellTagsIndex->{}
+*)
+(*NotebookFileOutline
+Notebook[{
+Cell[CellGroupData[{
+Cell[580, 22, 5836, 151, 430, "Input",ExpressionUUID->"385743dd-9622-4eef-95fa-b1c154cb1568"],
+Cell[6419, 175, 2994, 46, 77, "Output",ExpressionUUID->"35455edd-3861-446b-bb57-154fd8808630"],
+Cell[9416, 223, 4804, 72, 38, "Output",ExpressionUUID->"fdcfb159-aaeb-498c-ac39-ac6fefd6dd1c"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[14257, 300, 5016, 119, 686, "Input",ExpressionUUID->"0950c854-cedf-425f-b6f5-e5982ae33541"],
+Cell[19276, 421, 247, 5, 24, "Print",ExpressionUUID->"c5a182db-931a-49d4-8d6e-6930d94b4eb5"],
+Cell[19526, 428, 1454, 23, 56, "Output",ExpressionUUID->"de38a4bc-a451-432e-a21b-a262b0fd127a"],
+Cell[20983, 453, 1178, 19, 56, "Output",ExpressionUUID->"ba7d20d2-f8de-49f7-b9cc-8f84d7adece8"],
+Cell[22164, 474, 15945, 232, 125, "Output",ExpressionUUID->"7b9b9136-7698-4774-aa37-5fc5dcd6d159"],
+Cell[38112, 708, 1012, 16, 38, "Output",ExpressionUUID->"d2e5d31d-a2da-4ee8-accd-6d2b5cff907e"],
+Cell[CellGroupData[{
+Cell[39149, 728, 321, 8, 24, "Print",ExpressionUUID->"9c18cf5f-feaf-4d0e-b6b2-1011c5c363ed"],
+Cell[39473, 738, 533, 12, 24, "Print",ExpressionUUID->"0bcbe465-ace3-4404-8161-9e1fcfa9da1b"],
+Cell[40009, 752, 534, 12, 24, "Print",ExpressionUUID->"38b428f0-d786-414d-af50-10aa0757add6"],
+Cell[40546, 766, 534, 12, 24, "Print",ExpressionUUID->"ba0f39f0-f7dc-4ff6-a28e-7884381c0ea2"],
+Cell[41083, 780, 536, 12, 24, "Print",ExpressionUUID->"dbdb8004-8597-4af6-9da0-1ec97272a3c7"],
+Cell[41622, 794, 534, 12, 24, "Print",ExpressionUUID->"ebccb069-c875-4dc4-b696-5c9a21f0b8d9"],
+Cell[42159, 808, 534, 12, 24, "Print",ExpressionUUID->"3869e147-48f3-40c0-877b-6584594cce59"]
+}, Open  ]]
+}, Open  ]]
+}
+]
+*)
+
