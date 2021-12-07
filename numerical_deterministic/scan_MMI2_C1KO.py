@@ -52,7 +52,7 @@ model_mmi2_C1KO = {
     'vars':{
         'r' : \
             'sr - g * r  \
-            + rev*koff * 2*c2 - K2 * koff * R * r * r \
+            + rev*koff * 2*c2 - 2 * K2 * koff * R * r * r \
             + c2 * kR * a2 * 2 + c2 * g * b2 * 2',
         'R' : \
             'sR + sR0 - kR * R + rev*koff * c2 - K2 * koff * R * r * r  \
@@ -83,6 +83,9 @@ if 1: # A new run
     inuerr = []
     for i in range(int(n)):
         print(i)
+        if i in [860]: # Numerical error
+            data_all.append([])
+            continue
         for j, p in enumerate(['a1', 'a2', 'b1', 'b2']):
             r[p] = l[i,j]
         r['g'], r['K1'], r['K2'] = gsp[i], Ksp[i], Ksp[i]
