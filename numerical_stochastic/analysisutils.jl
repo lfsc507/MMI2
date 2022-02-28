@@ -19,15 +19,18 @@ function reduce_mmi(sol)
     return reshape(mT[:,:,:], (size(sol)[2], popsize))
 end
 
-# Get mRNA 1 concentration at each timepoint in each cell (for repressilator state)
+# Get mRNA 1 concentration at each timepoint in each cell (for repressilator or genetic oscillator state)
 function reduce_repressilator(sim)
+    return sim[1, :, :]
+end
+function reduce_geneosc(sim)
     return sim[1, :, :]
 end
 
 # Heatmap of state distributions at (final) timepoint across a range of signals
-function perturbed_results_heatmap(results; reduction=reduce_mmi, time=nothing, signame="σR", statelabel="[Rtot]", maxrna=5, kwargs...)
+function perturbed_results_heatmap(results; reduction=reduce_mmi, time=nothing, signame="σR", statelabel="[Rtot]", maxrna=5, binwidth=0.25, kwargs...)
     sR_values = keys(results) |> collect |> sort
-    bins = 0:0.25:maxrna
+    bins = 0:binwidth:maxrna
     final_histograms = map(sR_values) do sR
         mTs = reduction(results[sR])
         if isnothing(time)
@@ -119,10 +122,10 @@ function equilibriumindex(results, savedat=0.1, reduction=reduce_mmi; stabletime
 end
 
 # Timecourse of population state mean and state distribution for a population
-function timecourse_heatmap(results; startindex=first(axes(results)[2]), endindex=last(axes(results)[2]), savedat=0.1, stabletime=100.0, reduction=reduce_mmi, statename="[Rtot]", maxrna=10, kwargs...)
+function timecourse_heatmap(results; startindex=first(axes(results)[2]), endindex=last(axes(results)[2]), savedat=0.1, stabletime=100.0, reduction=reduce_mmi, statename="[Rtot]", maxrna=10, binwidth=0.25, kwargs...)
     mTs = reduction(results)
     timesteps = collect(startindex:endindex)
-    bins = 0:0.25:maxrna
+    bins = 0:binwidth:maxrna
     step_histograms = map(timesteps) do time
         fit(Histogram, mTs[time, :], bins).weights
     end

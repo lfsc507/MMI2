@@ -2,7 +2,7 @@
 
 These scripts use the same Julia project/packages as specified in the parent directory.
 
-* `runsim.jl` and `runsimrepressilator.jl` simulate the MMI2-SSB and repressilator models respectively.
+* `runsim.jl`, `runsimrepressilator.jl`, and `runsimgeneosc.jl` simulate the MMI2-SSB, repressilator, and Kim *et al.* genetic oscillator models respectively.
 They produce JLD2 data files representing a multilevel dictionary: the outermost dictionary contains an entry for each tested noise level,
 the inner dictionaries contain an entry for each tested signal level,
 and the innermost values are 3D arrays (indexed by molecular species, time index, and cell).
