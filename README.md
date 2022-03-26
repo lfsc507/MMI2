@@ -1,7 +1,7 @@
 # MMI2
 
-Computer code supporting manuscript
+Computer code supporting research article
 
-'Nonmodular oscillator and switch based on RNA decay drive regeneration of multimodal gene expression'
-
-Benjamin Nordick, Polly Y. Yu, Guangyuan Liao, Tian Hong
+<a href="https://doi.org/10.1093/nar/gkac217">Nonmodular oscillator and switch based on RNA decay drive regeneration of multimodal gene expression<br>
+Benjamin Nordick, Polly Y. Yu, Guangyuan Liao, Tian Hong<br>
+Nuceic Acids Res (2022)</a>
